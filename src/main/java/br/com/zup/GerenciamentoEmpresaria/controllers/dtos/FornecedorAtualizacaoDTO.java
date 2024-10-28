@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CNPJ;
 
-public class FornecedorAtualizacao {
+public class FornecedorAtualizacaoDTO {
 
     @Id
     @GeneratedValue
@@ -29,7 +29,7 @@ public class FornecedorAtualizacao {
     @Max(11)
     private String telefone;
 
-    public FornecedorAtualizacao() {}
+    public FornecedorAtualizacaoDTO() {}
 
     public Long getId() {
         return id;

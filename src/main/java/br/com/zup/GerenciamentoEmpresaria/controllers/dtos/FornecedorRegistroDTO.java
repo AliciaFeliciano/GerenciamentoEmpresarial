@@ -1,12 +1,11 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.br.CNPJ;
 
-public class FornecedorRegistro {
+public class FornecedorRegistroDTO {
 
     @NotNull
     @Min(3)
@@ -24,7 +23,7 @@ public class FornecedorRegistro {
     @Max(11)
     private String telefone;
 
-    public FornecedorRegistro() {}
+    public FornecedorRegistroDTO() {}
 
     public @NotNull @Min(3) String getNome() {
         return nome;
