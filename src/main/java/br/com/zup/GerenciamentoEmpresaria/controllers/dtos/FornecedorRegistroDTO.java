@@ -1,9 +1,7 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
 
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.br.CNPJ;
 
 public class FornecedorRegistroDTO {
 
@@ -12,16 +10,15 @@ public class FornecedorRegistroDTO {
     private String nome;
 
     @NotNull
-    @CNPJ
-    private String CNPJ;
+    private String cnpj;
+
+    @NotNull
+    private String telefone;
+
 
     @NotNull
     private String endereco;
 
-    @NotNull
-    @Min(11)
-    @Max(11)
-    private String telefone;
 
     public FornecedorRegistroDTO() {}
 
@@ -33,12 +30,20 @@ public class FornecedorRegistroDTO {
         this.nome = nome;
     }
 
-    public @NotNull @org.hibernate.validator.constraints.br.CNPJ String getCNPJ() {
-        return CNPJ;
+    public @NotNull  String getCnpj() {
+        return cnpj;
     }
 
-    public void setCNPJ(@NotNull @org.hibernate.validator.constraints.br.CNPJ String CNPJ) {
-        this.CNPJ = CNPJ;
+    public void setCnpj(@NotNull  String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public @NotNull  String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(@NotNull  String telefone) {
+        this.telefone = telefone;
     }
 
     public @NotNull String getEndereco() {
@@ -49,11 +54,4 @@ public class FornecedorRegistroDTO {
         this.endereco = endereco;
     }
 
-    public @NotNull @Min(11) @Max(11) String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(@NotNull @Min(11) @Max(11) String telefone) {
-        this.telefone = telefone;
-    }
 }

@@ -1,25 +1,26 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.br.CNPJ;
+
+import java.util.UUID;
 
 public class FornecedorAtualizacaoDTO {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    @Column(columnDefinition = "UUID" ,unique = true, nullable = false)
+    private String id;
 
     @NotNull
     @Min(3)
     private String nome;
 
     @NotNull
-    @CNPJ
-    private String CNPJ;
+    private String cnpj;
 
     @NotNull
     private String endereco;
@@ -29,13 +30,15 @@ public class FornecedorAtualizacaoDTO {
     @Max(11)
     private String telefone;
 
-    public FornecedorAtualizacaoDTO() {}
+    public FornecedorAtualizacaoDTO() {
+        this.id = UUID.randomUUID().toString();
+    }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -47,12 +50,10 @@ public class FornecedorAtualizacaoDTO {
         this.nome = nome;
     }
 
-    public @NotNull @org.hibernate.validator.constraints.br.CNPJ String getCNPJ() {
-        return CNPJ;
-    }
+    public @NotNull String getCnpj() {return cnpj;}
 
-    public void setCNPJ(@NotNull @org.hibernate.validator.constraints.br.CNPJ String CNPJ) {
-        this.CNPJ = CNPJ;
+    public void setCnpj(@NotNull String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public @NotNull String getEndereco() {
@@ -70,4 +71,5 @@ public class FornecedorAtualizacaoDTO {
     public void setTelefone(@NotNull @Min(11) @Max(11) String telefone) {
         this.telefone = telefone;
     }
+
 }

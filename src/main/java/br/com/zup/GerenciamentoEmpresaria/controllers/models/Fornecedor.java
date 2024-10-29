@@ -1,27 +1,31 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import java.util.UUID;
 
 @Entity
 public class Fornecedor {
+
     @Id
-    @GeneratedValue
-    private Long  id;
+    @Column(unique = true, nullable = false)
+    private String id;
 
     private String nome;
-    private String CNPJ;
+    private String cnpj;
     private String endereco;
     private String telefone;
 
-    public Fornecedor() {}
+    public Fornecedor() {
+        this.id = UUID.randomUUID().toString();
+    }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -33,12 +37,12 @@ public class Fornecedor {
         this.nome = nome;
     }
 
-    public String getCNPJ() {
-        return CNPJ;
+    public String getCnpj() {
+        return cnpj;
     }
 
-    public void setCNPJ(String CNPJ) {
-        this.CNPJ = CNPJ;
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getEndereco() {

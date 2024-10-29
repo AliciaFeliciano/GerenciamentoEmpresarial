@@ -8,21 +8,21 @@ public class FornecedorMapper {
 
     public static Fornecedor fromFornecedorRegistro(FornecedorRegistroDTO fornecedorRegistroDTO) {
         Fornecedor fornecedor = new Fornecedor();
-        fornecedorRegistroDTO.setNome(fornecedorRegistroDTO.getNome());
-        fornecedorRegistroDTO.setCNPJ(fornecedorRegistroDTO.getCNPJ());
-        fornecedorRegistroDTO.setEndereco(fornecedorRegistroDTO.getEndereco());
-        fornecedorRegistroDTO.setTelefone(fornecedorRegistroDTO.getTelefone());
+        fornecedor.setNome(fornecedorRegistroDTO.getNome());
+        fornecedor.setCnpj(fornecedorRegistroDTO.getCnpj());
+        fornecedor.setEndereco(fornecedorRegistroDTO.getEndereco());
+        fornecedor.setTelefone(fornecedorRegistroDTO.getTelefone());
 
         return fornecedor;
     }
 
     public static Fornecedor fromFornecedorAtualizacao(FornecedorAtualizacaoDTO fornecedorAtualizacaoDTO) {
         Fornecedor fornecedor = new Fornecedor();
-        fornecedorAtualizacaoDTO.setId(fornecedorAtualizacaoDTO.getId());
-        fornecedorAtualizacaoDTO.setNome(fornecedorAtualizacaoDTO.getNome());
-        fornecedorAtualizacaoDTO.setCNPJ(fornecedorAtualizacaoDTO.getCNPJ());
-        fornecedorAtualizacaoDTO.setEndereco(fornecedorAtualizacaoDTO.getEndereco());
-        fornecedorAtualizacaoDTO.setTelefone(fornecedorAtualizacaoDTO.getTelefone());
+        fornecedor.setId(fornecedorAtualizacaoDTO.getId());
+        fornecedor.setNome(fornecedorAtualizacaoDTO.getNome());
+        fornecedor.setCnpj(fornecedorAtualizacaoDTO.getCnpj());
+        fornecedor.setEndereco(fornecedorAtualizacaoDTO.getEndereco());
+        fornecedor.setTelefone(fornecedorAtualizacaoDTO.getTelefone());
 
         return fornecedor;
     }

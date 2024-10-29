@@ -2,6 +2,7 @@ package br.com.zup.GerenciamentoEmpresaria.services;
 
 import br.com.zup.GerenciamentoEmpresaria.controllers.models.Fornecedor;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.zup.GerenciamentoEmpresaria.repositorys.FornecedorRepository;
 
@@ -10,6 +11,8 @@ import java.util.List;
 
 @Service
 public class FornecedorService {
+
+    @Autowired
     private FornecedorRepository fornecedorRepository;
 
     public FornecedorService(FornecedorRepository fornecedorRepository) {
@@ -25,7 +28,7 @@ public class FornecedorService {
     }
 
 
-    public Fornecedor findFornecedor(Long id) {
+    public Fornecedor findFornecedor(String id) {
         return fornecedorRepository.findById(id)
                         .orElseThrow(() -> new EntityNotFoundException("Fornecedor não encontrado"));
     }
@@ -34,14 +37,14 @@ public class FornecedorService {
         Fornecedor fornecedorBD = findFornecedor(fornecedor.getId());
 
         fornecedorBD.setNome(fornecedor.getNome());
-        fornecedorBD.setCNPJ(fornecedor.getCNPJ());
+        fornecedorBD.setCnpj(fornecedor.getCnpj());
         fornecedorBD.setEndereco(fornecedor.getEndereco());
         fornecedorBD.setTelefone(fornecedor.getTelefone());
 
         return fornecedorRepository.save(fornecedorBD);
     }
 
-    public void deletaFornecedor(Long id) {
+    public void deletaFornecedor(String id) {
         Fornecedor fornecedor = findFornecedor(id);
         fornecedorRepository.deleteById(fornecedor.getId());
     }
