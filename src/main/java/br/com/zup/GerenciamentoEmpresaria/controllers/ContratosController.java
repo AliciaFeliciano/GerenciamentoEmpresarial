@@ -1,7 +1,7 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers;
 
+import br.com.zup.GerenciamentoEmpresaria.controllers.dtos.ContratoAtualizacaoDTO;
 import br.com.zup.GerenciamentoEmpresaria.controllers.dtos.ContratoRegistroDTO;
-import br.com.zup.GerenciamentoEmpresaria.controllers.dtos.FornecedorRegistroDTO;
 import br.com.zup.GerenciamentoEmpresaria.controllers.models.Fornecedor;
 import br.com.zup.GerenciamentoEmpresaria.repositorys.ContratoRepository;
 import br.com.zup.GerenciamentoEmpresaria.services.ContratosService;
@@ -34,8 +34,28 @@ public class ContratosController {
     }
 
     @GetMapping
-    public List<Contratos> listarContratos() {
-        return contratosService.listarContratos();
+    public List<Contratos> listContratos(){
+        return contratosService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Contratos findContratosById(@PathVariable String id) {
+        return contratosService.findContrato(id);
+    }
+
+    @PutMapping("/{id}")
+    public Contratos atualizarContratos(@PathVariable String id,@RequestBody ContratoAtualizacaoDTO contratoAtualizacaoDTO) {
+        contratoAtualizacaoDTO.setId(id);
+        Contratos atualizacaocontrato = ContratosMapper.fromContratoAtualizacao(contratoAtualizacaoDTO);
+        return contratosService.atualizarContrato(atualizacaocontrato);
+
+
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletarContrato(@PathVariable String id) {
+        contratosService.deletaContrato(id);
     }
 
 }
