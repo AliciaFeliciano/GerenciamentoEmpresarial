@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping( "/contratos")
+@RequestMapping( " /fornecedores/{fornecedorId}/contratos")
 public class ContratosController {
     @Autowired
     private ContratosService contratosService;
