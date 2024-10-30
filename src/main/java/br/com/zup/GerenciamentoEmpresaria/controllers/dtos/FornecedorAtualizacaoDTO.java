@@ -1,12 +1,13 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.br.CNPJ;
 
+import java.util.List;
 import java.util.UUID;
 
 public class FornecedorAtualizacaoDTO {
@@ -15,24 +16,27 @@ public class FornecedorAtualizacaoDTO {
     @Column(columnDefinition = "UUID" ,unique = true, nullable = false)
     private String id;
 
-    @NotNull
-    @Min(3)
+    @NotNull(message = "Campo obrigadorio")
+    @Min(value = 3, message = "O nome dever ter ao menos 3 caracteres ")
     private String nome;
 
-    @NotNull
+    @NotNull(message = "Campo obrigadorio")
+    @CNPJ
     private String cnpj;
 
-    @NotNull
+    @NotNull(message = "Campo obrigadorio")
     private String endereco;
 
-    @NotNull
-    @Min(11)
+    @NotNull(message = "Campo obrigadorio")
+    @Min(10)
     @Max(11)
+    @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}", message = "Formato de telefone inválido. O formato esperado é (XX) XXXXX-XXXX.")
     private String telefone;
 
-    public FornecedorAtualizacaoDTO() {
-        this.id = UUID.randomUUID().toString();
-    }
+    @OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
+    private List<String> contratos;
+
+    public FornecedorAtualizacaoDTO() {this.id = UUID.randomUUID().toString();}
 
     public String getId() {
         return id;
@@ -71,5 +75,9 @@ public class FornecedorAtualizacaoDTO {
     public void setTelefone(@NotNull @Min(11) @Max(11) String telefone) {
         this.telefone = telefone;
     }
+
+    public List<String> getContratos() {return contratos;}
+
+    public void setContratos(List<String> contratos) {this.contratos = contratos;}
 
 }

@@ -1,24 +1,37 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.br.CNPJ;
+
+import java.util.List;
 
 public class FornecedorRegistroDTO {
 
-    @NotNull
-    @Min(3)
+    @NotNull(message = "Campo obrigadorio")
+    @Min(value = 3, message = "O nome dever ter ao menos 3 caracteres ")
     private String nome;
 
-    @NotNull
+    @NotNull(message = "Campo obrigadorio")
+    @CNPJ
     private String cnpj;
 
-    @NotNull
+    @NotNull(message = "Campo obrigadorio")
+    @Min(10)
+    @Max(11)
+    @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}", message = "Formato de telefone inválido. O formato esperado é (XX) XXXXX-XXXX.")
     private String telefone;
 
-
-    @NotNull
+    @NotNull(message = "Campo obrigadorio")
     private String endereco;
 
+    @OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
+    private List<String> contratos;
 
     public FornecedorRegistroDTO() {}
 
@@ -53,5 +66,9 @@ public class FornecedorRegistroDTO {
     public void setEndereco(@NotNull String endereco) {
         this.endereco = endereco;
     }
+
+    public List<String> getContratos() {return contratos;}
+
+    public void setContratos(List<String> contratos) {this.contratos = contratos;}
 
 }

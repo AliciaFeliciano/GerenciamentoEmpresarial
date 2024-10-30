@@ -1,23 +1,28 @@
 package br.com.zup.GerenciamentoEmpresaria.services;
 
 import br.com.zup.GerenciamentoEmpresaria.controllers.models.Fornecedor;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import br.com.zup.GerenciamentoEmpresaria.repositorys.ContratoRepository;
 import br.com.zup.GerenciamentoEmpresaria.repositorys.FornecedorRepository;
-
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class FornecedorService {
 
-    @Autowired
-    private FornecedorRepository fornecedorRepository;
+    private final FornecedorRepository fornecedorRepository;
+    private final ContratoRepository contratoRepository;
 
-    public FornecedorService(FornecedorRepository fornecedorRepository) {
+    public FornecedorService(FornecedorRepository fornecedorRepository, ContratoRepository contratoRepository) {
         this.fornecedorRepository = fornecedorRepository;
+        this.contratoRepository = contratoRepository;
     }
+
+    public ContratoRepository getContratoRepository() {
+        return contratoRepository;
+    }
+
 
     public Fornecedor criaFornecedor(Fornecedor fornecedor) {
         return fornecedorRepository.save(fornecedor);
@@ -27,10 +32,9 @@ public class FornecedorService {
         return fornecedorRepository.findAll();
     }
 
-
     public Fornecedor findFornecedor(String id) {
         return fornecedorRepository.findById(id)
-                        .orElseThrow(() -> new EntityNotFoundException("Fornecedor não encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Fornecedor não encontrado"));
     }
 
     public Fornecedor atualizacaoFornecedor(Fornecedor fornecedor) {
@@ -40,6 +44,7 @@ public class FornecedorService {
         fornecedorBD.setCnpj(fornecedor.getCnpj());
         fornecedorBD.setEndereco(fornecedor.getEndereco());
         fornecedorBD.setTelefone(fornecedor.getTelefone());
+        fornecedorBD.setContratos(fornecedor.getContratos());
 
         return fornecedorRepository.save(fornecedorBD);
     }

@@ -1,8 +1,9 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -17,47 +18,34 @@ public class Fornecedor {
     private String endereco;
     private String telefone;
 
-    public Fornecedor() {
-        this.id = UUID.randomUUID().toString();
-    }
+    @OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
+    @JsonBackReference
+    private List<Contratos> contratos;
 
-    public String getId() {
-        return id;
-    }
+    public Fornecedor() {this.id = UUID.randomUUID().toString();}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getId() {return id;}
 
-    public String getNome() {
-        return nome;
-    }
+    public void setId(String id) {this.id = id;}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+    public String getNome() {return nome;}
 
-    public String getCnpj() {
-        return cnpj;
-    }
+    public void setNome(String nome) {this.nome = nome;}
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
-    }
+    public String getCnpj() {return cnpj;}
 
-    public String getEndereco() {
-        return endereco;
-    }
+    public void setCnpj(String cnpj) {this.cnpj = cnpj;}
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
+    public String getEndereco() {return endereco;}
 
-    public String getTelefone() {
-        return telefone;
-    }
+    public void setEndereco(String endereco) {this.endereco = endereco;}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+    public String getTelefone() {return telefone;}
+
+    public void setTelefone(String telefone) {this.telefone = telefone;}
+
+    public List<Contratos> getContratos() {return contratos;}
+
+    public void setContratos(List<Contratos> contratos) {this.contratos = contratos;}
+
 }

@@ -3,11 +3,10 @@ package br.com.zup.GerenciamentoEmpresaria.controllers;
 import br.com.zup.GerenciamentoEmpresaria.controllers.dtos.ContratoAtualizacaoDTO;
 import br.com.zup.GerenciamentoEmpresaria.controllers.dtos.ContratoRegistroDTO;
 import br.com.zup.GerenciamentoEmpresaria.controllers.models.Fornecedor;
-import br.com.zup.GerenciamentoEmpresaria.repositorys.ContratoRepository;
 import br.com.zup.GerenciamentoEmpresaria.services.ContratosService;
 import br.com.zup.GerenciamentoEmpresaria.controllers.models.Contratos;
+import br.com.zup.GerenciamentoEmpresaria.services.FornecedorService;
 import br.com.zup.GerenciamentoEmpresaria.services.mappers.ContratosMapper;
-import br.com.zup.GerenciamentoEmpresaria.services.mappers.FornecedorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,18 +18,20 @@ import java.util.List;
 public class ContratosController {
     @Autowired
     private ContratosService contratosService;
-    private ContratoRepository contratoRepository;
+    private FornecedorService fornecedorService;
 
-    public ContratosController(ContratoRepository contratoRepository, ContratosService contratosService){
-        this.contratoRepository = contratoRepository;
+    public ContratosController(ContratosService contratosService, FornecedorService fornecedorService) {
         this.contratosService = contratosService;
+        this.fornecedorService = fornecedorService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Contratos criarContratos(@RequestBody ContratoRegistroDTO contratoRegistroDTO){
-        Contratos contratos = ContratosMapper.fromContratoRegistro(contratoRegistroDTO);
-        return contratosService.criarContrato(contratos);
+        Fornecedor fornecedor = fornecedorService.findFornecedor(contratoRegistroDTO.getFornecedor().getId());
+        Contratos contratos = ContratosMapper.fromContratoRegistro(contratoRegistroDTO, fornecedor);
+        return contratosService.criarContrato(contratos, fornecedor.getId());
+
     }
 
     @GetMapping
@@ -46,9 +47,9 @@ public class ContratosController {
     @PutMapping("/{id}")
     public Contratos atualizarContratos(@PathVariable String id,@RequestBody ContratoAtualizacaoDTO contratoAtualizacaoDTO) {
         contratoAtualizacaoDTO.setId(id);
-        Contratos atualizacaocontrato = ContratosMapper.fromContratoAtualizacao(contratoAtualizacaoDTO);
-        return contratosService.atualizarContrato(atualizacaocontrato);
-
+        Fornecedor fornecedor = fornecedorService.findFornecedor(contratoAtualizacaoDTO.getFornecedor().getId());
+        Contratos atualizacaocontrato = ContratosMapper.fromContratoAtualizacao(contratoAtualizacaoDTO, fornecedor);
+        return contratosService.atualizarContrato(atualizacaocontrato, fornecedor.getId());
 
     }
 

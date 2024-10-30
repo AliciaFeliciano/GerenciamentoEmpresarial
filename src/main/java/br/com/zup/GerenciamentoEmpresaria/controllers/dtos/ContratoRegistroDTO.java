@@ -1,6 +1,9 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
 
+import br.com.zup.GerenciamentoEmpresaria.controllers.models.Fornecedor;
 import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -8,66 +11,53 @@ import java.time.LocalDate;
 
 public class ContratoRegistroDTO {
 
-    @NotNull
+    @NotNull(message = "Campo obrigatorio")
     private String numeroContrato;
-    @NotNull
+
+    @NotNull(message = "Campo obrigatorio")
     private LocalDate dataInicio;
-    @NotNull
+
+    @NotNull(message = "Campo obrigatorio")
     private LocalDate dataTermino;
-    @NotNull
-    @Min(1)
+
+    @NotNull(message = "Campo obrigatorio")
+    @Min(value = 1, message = "O valor dever ser maior que zero")
     private String valorTotal;
-    @NotNull
+
+    @NotNull(message = "Campo obrigatorio")
     private String descricao;
 
     @Column(nullable = false)
     private boolean ativo;
 
+    @NotNull(message = "Campo obrigatorio")
+    @ManyToOne
+    @JoinColumn(name = "fornecedor_id")
+    private Fornecedor fornecedor;
+
     public ContratoRegistroDTO() {}
 
-    public @NotNull String getNumeroContrato() {
-        return numeroContrato;
-    }
+    public @NotNull String getNumeroContrato() {return numeroContrato;}
 
-    public void setNumeroContrato(@NotNull String numeroContrato) {
-        this.numeroContrato = numeroContrato;
-    }
+    public void setNumeroContrato(@NotNull String numeroContrato) {this.numeroContrato = numeroContrato;}
 
-    public @NotNull LocalDate getDataInicio() {
-        return dataInicio;
-    }
+    public @NotNull LocalDate getDataInicio() {return dataInicio;}
 
-    public void setDataInicio(@NotNull LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
-    }
+    public void setDataInicio(@NotNull LocalDate dataInicio) {this.dataInicio = dataInicio;}
 
-    public @NotNull LocalDate getDataTermino() {
-        return dataTermino;
-    }
+    public @NotNull LocalDate getDataTermino() {return dataTermino;}
 
-    public void setDataTermino(@NotNull LocalDate dataTermino) {
-        this.dataTermino = dataTermino;
-    }
+    public void setDataTermino(@NotNull LocalDate dataTermino) {this.dataTermino = dataTermino;}
 
-    public @NotNull @Min(1) String getValorTotal() {
-        return valorTotal;
-    }
+    public @NotNull @Min(1) String getValorTotal() {return valorTotal;}
 
-    public void setValorTotal(@NotNull @Min(1) String valorTotal) {
-        this.valorTotal = valorTotal;
-    }
+    public void setValorTotal(@NotNull @Min(1) String valorTotal) {this.valorTotal = valorTotal;}
 
-    public @NotNull String getDescricao() {
-        return descricao;
-    }
+    public @NotNull String getDescricao() {return descricao;}
 
-    public void setDescricao(@NotNull String descricao) {
-        this.descricao = descricao;
-    }
+    public void setDescricao(@NotNull String descricao) {this.descricao = descricao;}
 
-    public boolean isAtivo() {
-        return ativo;
-    }
+    public boolean isAtivo() {return ativo;}
 
     public void atualizarAtivo() {
         LocalDate hoje = LocalDate.now();
@@ -75,4 +65,8 @@ public class ContratoRegistroDTO {
                 (hoje.isAfter(dataInicio) || hoje.isEqual(dataInicio)) &&
                 (hoje.isBefore(dataTermino) || hoje.isEqual(dataTermino));
     }
+
+    public Fornecedor getFornecedor() {return fornecedor;}
+
+    public void setFornecedor(Fornecedor fornecedor) {this.fornecedor = fornecedor;}
 }

@@ -1,12 +1,9 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
-
-import jakarta.persistence.Id;
 
 @Entity
 public class Contratos {
@@ -23,63 +20,43 @@ public class Contratos {
     @Column(nullable = false)
     private boolean ativo;
 
-    public Contratos() {
-        this.id = UUID.randomUUID().toString();
-    }
+    @ManyToOne
+    @JoinColumn(name = "fornecedor_id")
+    private Fornecedor fornecedor;
 
-    public String getId() {
-        return id;
-    }
+    public Contratos() {this.id = UUID.randomUUID().toString();}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getId() {return id;}
 
-    public String getNumeroContrato() {
-        return numeroContrato;
-    }
+    public void setId(String id) {this.id = id;}
 
-    public void setNumeroContrato(String numeroContrato) {
-        this.numeroContrato = numeroContrato;
-    }
+    public String getNumeroContrato() {return numeroContrato;}
 
-    public LocalDate getDataInicio() {
-        return dataInicio;
-    }
+    public void setNumeroContrato(String numeroContrato) {this.numeroContrato = numeroContrato;}
+
+    public LocalDate getDataInicio() {return dataInicio;}
 
     public void setDataInicio(LocalDate dataInicio) {
         this.dataInicio = dataInicio;
         atualizarAtivo();
     }
 
-    public LocalDate getDataTermino() {
-        return dataTermino;
-    }
+    public LocalDate getDataTermino() {return dataTermino;}
 
     public void setDataTermino(LocalDate dataTermino) {
         this.dataTermino = dataTermino;
         atualizarAtivo();
     }
 
-    public String getValorTotal() {
-        return valorTotal;
-    }
+    public String getValorTotal() {return valorTotal;}
 
-    public void setValorTotal(String valorTotal) {
-        this.valorTotal = valorTotal;
-    }
+    public void setValorTotal(String valorTotal) {this.valorTotal = valorTotal;}
 
-    public String getDescricao() {
-        return descricao;
-    }
+    public String getDescricao() {return descricao;}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+    public void setDescricao(String descricao) {this.descricao = descricao;}
 
-    public boolean isAtivo() {
-        return ativo;
-    }
+    public boolean isAtivo() {return ativo;}
 
     public void atualizarAtivo() {
         LocalDate hoje = LocalDate.now();
@@ -87,4 +64,8 @@ public class Contratos {
                 (hoje.isAfter(dataInicio) || hoje.isEqual(dataInicio)) &&
                 (hoje.isBefore(dataTermino) || hoje.isEqual(dataTermino));
     }
+
+    public Fornecedor getFornecedor() {return fornecedor;}
+
+    public void setFornecedor(Fornecedor fornecedor) {this.fornecedor = fornecedor;}
 }
