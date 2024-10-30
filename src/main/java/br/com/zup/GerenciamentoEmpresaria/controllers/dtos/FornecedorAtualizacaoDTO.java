@@ -1,15 +1,17 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.validator.constraints.br.CNPJ;
 
-import java.util.List;
 import java.util.UUID;
 
+@Getter
+@Setter
 public class FornecedorAtualizacaoDTO {
 
     @Id
@@ -25,59 +27,15 @@ public class FornecedorAtualizacaoDTO {
     private String cnpj;
 
     @NotNull(message = "Campo obrigadorio")
-    private String endereco;
-
-    @NotNull(message = "Campo obrigadorio")
-    @Min(10)
-    @Max(11)
-    @Pattern(regexp = "\\(\\d{2}\\) \\d{4,5}-\\d{4}", message = "Formato de telefone inválido. O formato esperado é (XX) XXXXX-XXXX.")
+    @Pattern(regexp = "^\\([1-9]{2}\\) (?:[2-8]|9[0-9])[0-9]{3}-[0-9]{4}$", message = "O numero deve estar no formato")
     private String telefone;
 
-    @OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL, fetch = FetchType.LAZY,orphanRemoval = true)
-    private List<String> contratos;
+    @NotNull(message = "Campo obrigadorio")
+    private String endereco;
+
 
     public FornecedorAtualizacaoDTO() {this.id = UUID.randomUUID().toString();}
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public @NotNull @Min(3) String getNome() {
-        return nome;
-    }
-
-    public void setNome(@NotNull @Min(3) String nome) {
-        this.nome = nome;
-    }
-
-    public @NotNull String getCnpj() {return cnpj;}
-
-    public void setCnpj(@NotNull String cnpj) {
-        this.cnpj = cnpj;
-    }
-
-    public @NotNull String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(@NotNull String endereco) {
-        this.endereco = endereco;
-    }
-
-    public @NotNull @Min(11) @Max(11) String getTelefone() {
-        return telefone;
-    }
-
-    public void setTelefone(@NotNull @Min(11) @Max(11) String telefone) {
-        this.telefone = telefone;
-    }
-
-    public List<String> getContratos() {return contratos;}
-
-    public void setContratos(List<String> contratos) {this.contratos = contratos;}
 
 }

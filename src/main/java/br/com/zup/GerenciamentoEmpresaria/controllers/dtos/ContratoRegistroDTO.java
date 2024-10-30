@@ -6,8 +6,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
+
+@Getter
+@Setter
 
 public class ContratoRegistroDTO {
 
@@ -27,7 +32,6 @@ public class ContratoRegistroDTO {
     @NotNull(message = "Campo obrigatorio")
     private String descricao;
 
-    @Column(nullable = false)
     private boolean ativo;
 
     @NotNull(message = "Campo obrigatorio")
@@ -37,36 +41,5 @@ public class ContratoRegistroDTO {
 
     public ContratoRegistroDTO() {}
 
-    public @NotNull String getNumeroContrato() {return numeroContrato;}
 
-    public void setNumeroContrato(@NotNull String numeroContrato) {this.numeroContrato = numeroContrato;}
-
-    public @NotNull LocalDate getDataInicio() {return dataInicio;}
-
-    public void setDataInicio(@NotNull LocalDate dataInicio) {this.dataInicio = dataInicio;}
-
-    public @NotNull LocalDate getDataTermino() {return dataTermino;}
-
-    public void setDataTermino(@NotNull LocalDate dataTermino) {this.dataTermino = dataTermino;}
-
-    public @NotNull @Min(1) String getValorTotal() {return valorTotal;}
-
-    public void setValorTotal(@NotNull @Min(1) String valorTotal) {this.valorTotal = valorTotal;}
-
-    public @NotNull String getDescricao() {return descricao;}
-
-    public void setDescricao(@NotNull String descricao) {this.descricao = descricao;}
-
-    public boolean isAtivo() {return ativo;}
-
-    public void atualizarAtivo() {
-        LocalDate hoje = LocalDate.now();
-        this.ativo = (dataInicio != null && dataTermino != null) &&
-                (hoje.isAfter(dataInicio) || hoje.isEqual(dataInicio)) &&
-                (hoje.isBefore(dataTermino) || hoje.isEqual(dataTermino));
-    }
-
-    public Fornecedor getFornecedor() {return fornecedor;}
-
-    public void setFornecedor(Fornecedor fornecedor) {this.fornecedor = fornecedor;}
 }

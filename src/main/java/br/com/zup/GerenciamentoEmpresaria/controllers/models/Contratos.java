@@ -1,10 +1,14 @@
 package br.com.zup.GerenciamentoEmpresaria.controllers.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Entity
 public class Contratos {
     @Id
@@ -26,46 +30,5 @@ public class Contratos {
 
     public Contratos() {this.id = UUID.randomUUID().toString();}
 
-    public String getId() {return id;}
 
-    public void setId(String id) {this.id = id;}
-
-    public String getNumeroContrato() {return numeroContrato;}
-
-    public void setNumeroContrato(String numeroContrato) {this.numeroContrato = numeroContrato;}
-
-    public LocalDate getDataInicio() {return dataInicio;}
-
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
-        atualizarAtivo();
-    }
-
-    public LocalDate getDataTermino() {return dataTermino;}
-
-    public void setDataTermino(LocalDate dataTermino) {
-        this.dataTermino = dataTermino;
-        atualizarAtivo();
-    }
-
-    public String getValorTotal() {return valorTotal;}
-
-    public void setValorTotal(String valorTotal) {this.valorTotal = valorTotal;}
-
-    public String getDescricao() {return descricao;}
-
-    public void setDescricao(String descricao) {this.descricao = descricao;}
-
-    public boolean isAtivo() {return ativo;}
-
-    public void atualizarAtivo() {
-        LocalDate hoje = LocalDate.now();
-        this.ativo = (dataInicio != null && dataTermino != null) &&
-                (hoje.isAfter(dataInicio) || hoje.isEqual(dataInicio)) &&
-                (hoje.isBefore(dataTermino) || hoje.isEqual(dataTermino));
-    }
-
-    public Fornecedor getFornecedor() {return fornecedor;}
-
-    public void setFornecedor(Fornecedor fornecedor) {this.fornecedor = fornecedor;}
 }

@@ -7,6 +7,7 @@ import br.com.zup.GerenciamentoEmpresaria.services.ContratosService;
 import br.com.zup.GerenciamentoEmpresaria.controllers.models.Contratos;
 import br.com.zup.GerenciamentoEmpresaria.services.FornecedorService;
 import br.com.zup.GerenciamentoEmpresaria.services.mappers.ContratosMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,13 @@ public class ContratosController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Contratos criarContratos(@RequestBody ContratoRegistroDTO contratoRegistroDTO){
+    public Contratos criarContratos( @RequestBody ContratoRegistroDTO contratoRegistroDTO){
         Fornecedor fornecedor = fornecedorService.findFornecedor(contratoRegistroDTO.getFornecedor().getId());
         Contratos contratos = ContratosMapper.fromContratoRegistro(contratoRegistroDTO, fornecedor);
+
+        contratosService.validarDatas(contratoRegistroDTO.getDataInicio(), contratoRegistroDTO.getDataTermino());
+        boolean ativo = contratosService.atualizarAtivo(contratoRegistroDTO.getDataInicio(), contratoRegistroDTO.getDataTermino());
+        contratoRegistroDTO.setAtivo(ativo);
         return contratosService.criarContrato(contratos, fornecedor.getId());
 
     }
@@ -49,6 +54,10 @@ public class ContratosController {
         contratoAtualizacaoDTO.setId(id);
         Fornecedor fornecedor = fornecedorService.findFornecedor(contratoAtualizacaoDTO.getFornecedor().getId());
         Contratos atualizacaocontrato = ContratosMapper.fromContratoAtualizacao(contratoAtualizacaoDTO, fornecedor);
+
+        contratosService.validarDatas(contratoAtualizacaoDTO.getDataInicio(), contratoAtualizacaoDTO.getDataTermino());
+        boolean ativo = contratosService.atualizarAtivo(contratoAtualizacaoDTO.getDataInicio(), contratoAtualizacaoDTO.getDataTermino());
+        contratoAtualizacaoDTO.setAtivo(ativo);
         return contratosService.atualizarContrato(atualizacaocontrato, fornecedor.getId());
 
     }

@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -21,6 +22,19 @@ public class ContratosService {
     public ContratosService(ContratoRepository contratoRepository, FornecedorRepository fornecedorRepository) {
         this.contratoRepository = contratoRepository;
         this.fornecedorRepository = fornecedorRepository;
+    }
+
+    public void validarDatas(LocalDate dataInicio, LocalDate dataTermino) {
+        if (dataInicio != null && dataTermino != null && dataTermino.isBefore(dataInicio)) {
+            throw new IllegalArgumentException("A data de término deve ser maior que a data de início.");
+        }
+    }
+
+    public boolean atualizarAtivo(LocalDate dataInicio, LocalDate dataTermino) {
+        LocalDate hoje = LocalDate.now();
+        return (dataInicio != null && dataTermino != null) &&
+                (hoje.isAfter(dataInicio) || hoje.isEqual(dataInicio)) &&
+                (hoje.isBefore(dataTermino) || hoje.isEqual(dataTermino));
     }
 
     public Contratos criarContrato(Contratos contratos,String fornecedorId) {
