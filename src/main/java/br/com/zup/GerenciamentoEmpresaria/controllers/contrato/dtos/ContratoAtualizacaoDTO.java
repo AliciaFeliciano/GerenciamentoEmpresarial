@@ -1,9 +1,5 @@
-package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
+package br.com.zup.GerenciamentoEmpresaria.controllers.contrato.dtos;
 
-import br.com.zup.GerenciamentoEmpresaria.controllers.models.Fornecedor;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -13,8 +9,10 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+public class ContratoAtualizacaoDTO {
 
-public class ContratoRegistroDTO {
+    @NotNull(message = "Campo obrigatorio")
+    private String id;
 
     @NotNull(message = "Campo obrigatorio")
     private String numeroContrato;
@@ -26,20 +24,12 @@ public class ContratoRegistroDTO {
     private LocalDate dataTermino;
 
     @NotNull(message = "Campo obrigatorio")
-    @Min(value = 1, message = "O valor dever ser maior que zero")
+    @Min(1)
     private String valorTotal;
 
     @NotNull(message = "Campo obrigatorio")
     private String descricao;
 
     private boolean ativo;
-
-    @NotNull(message = "Campo obrigatorio")
-    @ManyToOne
-    @JoinColumn(name = "fornecedor_id")
-    private Fornecedor fornecedor;
-
-    public ContratoRegistroDTO() {}
-
 
 }

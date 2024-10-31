@@ -1,4 +1,4 @@
-package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
+package br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores.dtos;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;

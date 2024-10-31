@@ -1,9 +1,6 @@
-package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
+package br.com.zup.GerenciamentoEmpresaria.controllers.contrato.dtos;
 
-import br.com.zup.GerenciamentoEmpresaria.controllers.models.Fornecedor;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+import br.com.zup.GerenciamentoEmpresaria.models.Fornecedor;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Min;
@@ -12,14 +9,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @Setter
-public class ContratoAtualizacaoDTO {
-    @Id
-    @Column(unique = true, nullable = false)
-    private String id;
+
+public class ContratoRegistroDTO {
 
     @NotNull(message = "Campo obrigatorio")
     private String numeroContrato;
@@ -31,7 +25,7 @@ public class ContratoAtualizacaoDTO {
     private LocalDate dataTermino;
 
     @NotNull(message = "Campo obrigatorio")
-    @Min(1)
+    @Min(value = 1, message = "O valor dever ser maior que zero")
     private String valorTotal;
 
     @NotNull(message = "Campo obrigatorio")
@@ -40,12 +34,11 @@ public class ContratoAtualizacaoDTO {
     private boolean ativo;
 
     @NotNull(message = "Campo obrigatorio")
-
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
-    @JsonManagedReference
     private Fornecedor fornecedor;
 
-    public ContratoAtualizacaoDTO() {this.id = UUID.randomUUID().toString();}
+    public ContratoRegistroDTO() {}
+
 
 }

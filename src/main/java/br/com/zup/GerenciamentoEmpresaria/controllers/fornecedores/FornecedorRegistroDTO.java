@@ -1,4 +1,4 @@
-package br.com.zup.GerenciamentoEmpresaria.controllers.dtos;
+package br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ public class FornecedorRegistroDTO {
     private String nome;
 
     @NotNull(message = "Campo obrigadorio")
-    @CNPJ
+    @CNPJ(message = "O cnpj deve estar no padrão brasileiro")
     private String cnpj;
 
     @NotNull(message = "Campo obrigadorio")
@@ -29,6 +29,5 @@ public class FornecedorRegistroDTO {
 
 
     public FornecedorRegistroDTO() {}
-
 
 }

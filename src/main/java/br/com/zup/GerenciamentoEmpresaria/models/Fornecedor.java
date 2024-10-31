@@ -1,4 +1,4 @@
-package br.com.zup.GerenciamentoEmpresaria.controllers.models;
+package br.com.zup.GerenciamentoEmpresaria.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
@@ -27,6 +27,5 @@ public class Fornecedor {
     private List<Contratos> contratos;
 
     public Fornecedor() {this.id = UUID.randomUUID().toString();}
-
 
 }

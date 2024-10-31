@@ -1,5 +1,6 @@
-package br.com.zup.GerenciamentoEmpresaria.controllers.models;
+package br.com.zup.GerenciamentoEmpresaria.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,15 +21,13 @@ public class Contratos {
     private LocalDate dataTermino;
     private String valorTotal;
     private String descricao;
-
-    @Column(nullable = false)
     private boolean ativo;
 
     @ManyToOne
-    @JoinColumn(name = "fornecedor_id")
+    @JoinColumn(name = "fornecedor_id", nullable = false)
+    @JsonIgnore
     private Fornecedor fornecedor;
 
     public Contratos() {this.id = UUID.randomUUID().toString();}
-
 
 }
