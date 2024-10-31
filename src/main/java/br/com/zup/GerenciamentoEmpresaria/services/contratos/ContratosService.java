@@ -7,7 +7,6 @@ import br.com.zup.GerenciamentoEmpresaria.models.Fornecedor;
 import br.com.zup.GerenciamentoEmpresaria.repositorys.ContratoRepository;
 import br.com.zup.GerenciamentoEmpresaria.repositorys.FornecedorRepository;
 import br.com.zup.GerenciamentoEmpresaria.services.contratos.mapper.ContratosMapper;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +49,7 @@ public class ContratosService {
     @Transactional
     public Contratos findContrato(String id) {
         return contratoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Contrato não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Contrato não encontrado"));
     }
 
     @Transactional

@@ -24,7 +24,7 @@ public class FornecedoresController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Fornecedor criarFornecedor(@RequestBody @Valid FornecedorRegistroDTO fornecedorRegistroDTO) {
+    public Fornecedor criarFornecedor(@RequestBody  FornecedorRegistroDTO fornecedorRegistroDTO) {
         return fornecedorService.criaFornecedor(fornecedorRegistroDTO);
     }
 
@@ -39,7 +39,7 @@ public class FornecedoresController {
     }
 
     @PutMapping("/{id}")
-    public Fornecedor atualizacaoFornecedor(@PathVariable String id, @RequestBody @Valid FornecedorAtualizacaoDTO fornecedorAtualizacaoDTO) {
+    public Fornecedor atualizacaoFornecedor(@PathVariable String id, @RequestBody FornecedorAtualizacaoDTO fornecedorAtualizacaoDTO) {
         fornecedorAtualizacaoDTO.setId(id);
         return fornecedorService.atualizacaoFornecedor(fornecedorAtualizacaoDTO);
     }
