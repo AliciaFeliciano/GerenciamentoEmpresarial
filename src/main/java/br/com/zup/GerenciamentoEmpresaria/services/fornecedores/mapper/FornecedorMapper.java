@@ -1,7 +1,7 @@
 package br.com.zup.GerenciamentoEmpresaria.services.fornecedores.mapper;
 
 import br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores.dtos.FornecedorAtualizacaoDTO;
-import br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores.FornecedorRegistroDTO;
+import br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores.dtos.FornecedorRegistroDTO;
 import br.com.zup.GerenciamentoEmpresaria.models.Fornecedor;
 
 public class FornecedorMapper {

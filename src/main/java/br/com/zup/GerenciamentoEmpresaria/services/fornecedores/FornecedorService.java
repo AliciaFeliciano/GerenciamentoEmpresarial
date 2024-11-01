@@ -1,6 +1,6 @@
 package br.com.zup.GerenciamentoEmpresaria.services.fornecedores;
 
-import br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores.FornecedorRegistroDTO;
+import br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores.dtos.FornecedorRegistroDTO;
 import br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores.dtos.FornecedorAtualizacaoDTO;
 import br.com.zup.GerenciamentoEmpresaria.models.Fornecedor;
 import br.com.zup.GerenciamentoEmpresaria.repositorys.ContratoRepository;

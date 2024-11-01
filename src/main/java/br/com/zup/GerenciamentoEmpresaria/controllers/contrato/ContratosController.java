@@ -5,6 +5,7 @@ import br.com.zup.GerenciamentoEmpresaria.controllers.contrato.dtos.ContratoRegi
 import br.com.zup.GerenciamentoEmpresaria.repositorys.ContratoRepository;
 import br.com.zup.GerenciamentoEmpresaria.services.contratos.ContratosService;
 import br.com.zup.GerenciamentoEmpresaria.models.Contratos;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class ContratosController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Contratos criarContratos(@PathVariable String fornecedor_id, @RequestBody ContratoRegistroDTO contratoRegistroDTO){
+    public Contratos criarContratos(@Valid @PathVariable String fornecedor_id, @RequestBody ContratoRegistroDTO contratoRegistroDTO){
         return contratosService.criarContrato(contratoRegistroDTO, fornecedor_id);
     }
 
@@ -37,12 +38,12 @@ public class ContratosController {
     }
 
     @GetMapping("/{contrato_id}")
-    public Contratos findContratosById(@PathVariable String contrato_id) {
+    public Contratos findContratosById( @PathVariable String contrato_id) {
         return contratosService.findContrato(contrato_id);
     }
 
     @PutMapping("/{contrato_id}")
-    public Contratos atualizarContratos(@PathVariable String contrato_id, @RequestBody ContratoAtualizacaoDTO contratoAtualizacaoDTO) {
+    public Contratos atualizarContratos(@Valid @PathVariable String contrato_id, @RequestBody ContratoAtualizacaoDTO contratoAtualizacaoDTO) {
         contratoAtualizacaoDTO.setId(contrato_id);
         return contratosService.atualizarContrato(contratoAtualizacaoDTO);
 
