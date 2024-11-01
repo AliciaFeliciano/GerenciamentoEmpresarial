@@ -88,27 +88,23 @@ public class ContratosService {
     //Pesquisas
 
     @Transactional
-    public List<Contratos> findContratosByFornecedorAndDataInicio(String fornecedor_id, LocalDate dataInicio) {
-        return contratoRepository.findByFornecedorIdAndDataInicio(fornecedor_id, dataInicio)
-                .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado para o fornecedor com a data de início fornecida"));
-    }
+    public List<Contratos> findContratos(String fornecedor_id, LocalDate dataInicial, LocalDate dataTermino, Boolean ativo, String descricao) {
 
-    @Transactional
-    public List<Contratos> findContratosByFornecedorAndDataTermino(String fornecedor_id, LocalDate dataTermino) {
-        return contratoRepository.findByFornecedorIdAndDataTermino(fornecedor_id, dataTermino)
-                .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado para o fornecedor com a data final fornecida"));
-    }
+        if (dataInicial != null) {
+            return contratoRepository.findByFornecedorIdAndDataInicio(fornecedor_id, dataInicial)
+                    .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado com a data de início fornecida"));
+        } else if (dataTermino != null) {
+            return contratoRepository.findByFornecedorIdAndDataTermino(fornecedor_id, dataTermino)
+                    .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado com a data de término fornecida"));
+        } else if (ativo != null) {
+            return contratoRepository.findByFornecedorIdAndAtivo(fornecedor_id, ativo)
+                    .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado com o status ativo fornecido"));
+        } else if (descricao != null) {
+            return contratoRepository.findByFornecedorIdAndDescricaoContaining(fornecedor_id, descricao)
+                    .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado com a descrição fornecida"));
+        } else {
+            return contratoRepository.findByFornecedorId(fornecedor_id);
+        }
 
-    @Transactional
-    public List<Contratos> findContratosByFornecedorAndAtivo(String fornecedor_id, Boolean ativo) {
-        return contratoRepository.findByFornecedorIdAndAtivo(fornecedor_id, ativo)
-                .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado para o fornecedor com o status ativo fornecido"));
     }
-
-    @Transactional
-    public List<Contratos> findContratosByFornecedorAndDescricao(String fornecedor_id, String descricao) {
-        return contratoRepository.findByFornecedorIdAndDescricaoContaining(fornecedor_id, descricao)
-                .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado para o fornecedor com a descrição fornecida"));
-    }
-
 }
