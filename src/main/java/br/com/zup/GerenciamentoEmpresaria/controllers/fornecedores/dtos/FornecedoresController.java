@@ -3,7 +3,6 @@ package br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores.dtos;
 import br.com.zup.GerenciamentoEmpresaria.controllers.fornecedores.FornecedorRegistroDTO;
 import br.com.zup.GerenciamentoEmpresaria.models.Fornecedor;
 import br.com.zup.GerenciamentoEmpresaria.services.fornecedores.FornecedorService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +15,7 @@ public class FornecedoresController {
 
     @Autowired
     private final FornecedorService fornecedorService;
+
 
 
     public FornecedoresController(FornecedorService fornecedorService) {

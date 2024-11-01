@@ -19,7 +19,6 @@ public class ContratosService {
 
     @Autowired
     private ContratoRepository contratoRepository;
-
     @Autowired
     private FornecedorRepository fornecedorRepository;
 
@@ -54,15 +53,13 @@ public class ContratosService {
 
     @Transactional
     public Contratos atualizarContrato(ContratoAtualizacaoDTO contratoAtualizacaoDTO) {
-        Contratos contratosBD =  findContrato(contratoAtualizacaoDTO.getId());
+        Contratos contratosBD = findContrato(contratoAtualizacaoDTO.getId());
         validarDatas(contratoAtualizacaoDTO.getDataInicio(), contratoAtualizacaoDTO.getDataTermino());
-
 
         contratosBD.setNumeroContrato(contratoAtualizacaoDTO.getNumeroContrato());
         contratosBD.setDataTermino(contratoAtualizacaoDTO.getDataTermino());
         contratosBD.setDataInicio(contratoAtualizacaoDTO.getDataInicio());
         contratosBD.setDescricao(contratoAtualizacaoDTO.getDescricao());
-        contratosBD.setId(contratoAtualizacaoDTO.getId());
         contratosBD.setAtivo(atualizarAtivo(contratoAtualizacaoDTO.getDataInicio(), contratoAtualizacaoDTO.getDataTermino()));
 
         return contratoRepository.save(contratosBD);
@@ -72,7 +69,6 @@ public class ContratosService {
     public void deletaContrato(String contrato_id) {
         contratoRepository.deleteById(contrato_id);
     }
-
 
     @Transactional
     public boolean atualizarAtivo(LocalDate dataInicio, LocalDate dataTermino) {
@@ -88,4 +84,31 @@ public class ContratosService {
             throw new IllegalArgumentException("A data de término deve ser maior que a data de início.");
         }
     }
+
+    //Pesquisas
+
+    @Transactional
+    public List<Contratos> findContratosByFornecedorAndDataInicio(String fornecedor_id, LocalDate dataInicio) {
+        return contratoRepository.findByFornecedorIdAndDataInicio(fornecedor_id, dataInicio)
+                .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado para o fornecedor com a data de início fornecida"));
+    }
+
+    @Transactional
+    public List<Contratos> findContratosByFornecedorAndDataTermino(String fornecedor_id, LocalDate dataTermino) {
+        return contratoRepository.findByFornecedorIdAndDataTermino(fornecedor_id, dataTermino)
+                .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado para o fornecedor com a data final fornecida"));
+    }
+
+    @Transactional
+    public List<Contratos> findContratosByFornecedorAndAtivo(String fornecedor_id, Boolean ativo) {
+        return contratoRepository.findByFornecedorIdAndAtivo(fornecedor_id, ativo)
+                .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado para o fornecedor com o status ativo fornecido"));
+    }
+
+    @Transactional
+    public List<Contratos> findContratosByFornecedorAndDescricao(String fornecedor_id, String descricao) {
+        return contratoRepository.findByFornecedorIdAndDescricaoContaining(fornecedor_id, descricao)
+                .orElseThrow(() -> new RuntimeException("Nenhum contrato encontrado para o fornecedor com a descrição fornecida"));
+    }
+
 }
