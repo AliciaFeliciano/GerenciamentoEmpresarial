@@ -9,6 +9,7 @@ import br.com.zup.GerenciamentoEmpresaria.repositorys.FornecedorRepository;
 import br.com.zup.GerenciamentoEmpresaria.services.contratos.mapper.ContratosMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -107,4 +108,17 @@ public class ContratosService {
         }
 
     }
+
+    @Transactional
+    @Scheduled(cron = "0 0 * * * *")
+    public void atualizarStatusContratos() {
+        LocalDate hoje = LocalDate.now();
+        List<Contratos> contratos = contratoRepository.findByDataTerminoLessThanEqualAndAtivo(hoje, true);
+
+        for (Contratos contrato : contratos) {
+            contrato.setAtivo(false);
+            contratoRepository.saveAndFlush(contrato);
+        }
+    }
+
 }

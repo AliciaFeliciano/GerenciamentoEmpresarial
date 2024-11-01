@@ -17,4 +17,6 @@ public interface ContratoRepository extends JpaRepository<Contratos, String> {
     Optional<List<Contratos>> findByFornecedorIdAndDescricaoContaining(String fornecedor_id, String descricao);
     List<Contratos> findByFornecedorId(String fornecedor_id);
 
+    List<Contratos> findByDataTerminoLessThanEqualAndAtivo(LocalDate data, boolean ativo);
+
 }
